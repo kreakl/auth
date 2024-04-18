@@ -7,14 +7,15 @@ import { RouterProvider } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
 import { appStore, persistor } from './redux/app-store.ts';
 import { router } from './router.tsx';
-import { theme } from './theme.ts';
+import { ToastContainer } from '@/features/toast';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ChakraProvider theme={theme}>
+    <ChakraProvider>
       <ReduxProvider store={appStore}>
         <PersistGate loading={null} persistor={persistor}>
           <RouterProvider router={router} />
+          <ToastContainer />
         </PersistGate>
       </ReduxProvider>
     </ChakraProvider>

@@ -48,12 +48,7 @@ export class UserService {
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
-    const { login } = updateUserDto;
     const user = this.userFactory.update(updateUserDto);
-
-    if (login && await this.isUserWithLoginAlreadyExists(login)) {
-      throw new ConflictException('User with provided login is already exists');
-    }
 
     const { affected } = await this.userRepository
       .createQueryBuilder()
@@ -65,5 +60,7 @@ export class UserService {
     if (!affected) {
       throw new UnprocessableEntityException('User does not exist');
     }
+
+    return this.findOne(id);
   }
 }

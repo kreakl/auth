@@ -40,7 +40,10 @@ export class AuthService {
         exp: add(new Date(), { months: 1 }).toDateString(),
       });
 
-    return tokenPair;
+    return {
+      userId: user.id,
+      ...tokenPair
+    };
   }
 
   async deleteRefreshToken(refreshToken: string) {

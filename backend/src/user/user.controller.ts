@@ -41,7 +41,7 @@ export class UserController {
     return this.userService.update(+id, updateUserDto);
   }
 
-  @Get()
+  @Get('/me')
   me(@CurrentUser() user: User) {
     return user;
   }

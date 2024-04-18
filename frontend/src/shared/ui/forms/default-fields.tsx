@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { forwardRef, Input, InputGroup, InputProps } from '@chakra-ui/react';
-import { createField, PasswordInput, PasswordInputProps } from '@/shared/ui';
+import { createField } from './create-field.tsx'
+import { PasswordInput, PasswordInputProps } from './fields/password-input.tsx';
 
 export const PasswordInputField = createField<PasswordInputProps>(
   forwardRef((props, ref) => <PasswordInput ref={ref} {...props} />),

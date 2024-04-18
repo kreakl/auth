@@ -9,6 +9,7 @@ declare global {
   type RootState = import('../src/app/redux/app-store').RootState;
   type AppDispatch = import('../src/app/redux/app-store').AppDispatch;
   type AppThunk = import('../src/app/redux/app-store').AppThunk;
+  type AppStartListening = import('../src/app/redux/app-store').AppStartListening;
 }
 
 export {};

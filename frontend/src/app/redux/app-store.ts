@@ -1,4 +1,4 @@
-import { configureStore, ThunkAction, UnknownAction } from '@reduxjs/toolkit';
+import { configureStore, ThunkAction, TypedStartListening, UnknownAction } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import {
   persistStore,
@@ -14,9 +14,12 @@ import storage from 'redux-persist/lib/storage';
 
 import { rootReducer } from './root-reducer';
 import { baseApi } from '@/shared/api';
+import { listenerMiddleware } from './listener.ts';
+import { sessionSlice } from '@/entities/session';
 
 const persistConfig = {
   key: 'root',
+  whitelist: [sessionSlice.name],
   storage,
 };
 
@@ -29,7 +32,9 @@ export const setupStore = () => {
         serializableCheck: {
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
-      }).concat(baseApi.middleware),
+      })
+        .prepend(listenerMiddleware.middleware)
+        .concat(baseApi.middleware),
   });
 
   setupListeners(store.dispatch);
@@ -49,3 +54,5 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   unknown,
   UnknownAction
 >;
+
+export type AppStartListening = TypedStartListening<RootState, AppDispatch>;

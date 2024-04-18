@@ -11,6 +11,7 @@ export class UserFactory {
 
     user.login = dto.login;
     user.password = this.hashUserPassword(dto.password)
+    user.fullName = dto.fullName;
 
     return user;
   }
