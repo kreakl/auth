@@ -6,6 +6,18 @@ import type {
 } from '@reduxjs/toolkit/query';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
+export type QueryReturnValue<T = unknown, E = unknown, M = unknown> =
+  | {
+      error: E;
+      data?: undefined;
+      meta?: M;
+    }
+  | {
+      error?: undefined;
+      data: T;
+      meta?: M;
+    };
+
 export const baseQuery: BaseQueryFn<
   string | FetchArgs,
   unknown,

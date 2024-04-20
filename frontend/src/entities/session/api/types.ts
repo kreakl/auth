@@ -20,3 +20,7 @@ export type UserDto = {
   createdAt: string;
   fullName?: string;
 };
+
+export type RefreshTokenRequestDto = {
+  refreshToken: string;
+};

@@ -1,17 +1,17 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   baseApi,
   isFetchBaseQueryError,
   isFetchBaseQueryErrorWithMessage,
   SESSION_TAG,
 } from '@/shared/api';
-import type { LoginRequestDto, SessionDto } from './types';
+import type { LoginRequestDto, RefreshTokenRequestDto, SessionDto } from './types';
 import { showToast } from '@/shared/lib';
 import { clearSessionData } from '@/entities/session';
+import { createAppAsyncThunk } from '@/shared/model';
 
 export const sessionApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    logout: build.mutation<void, string>({
+    logout: build.mutation<void, string | undefined>({
       query: (refreshToken) => ({
         url: `/auth/tokens/${refreshToken}`,
         method: 'DELETE',
@@ -46,9 +46,11 @@ export const sessionApi = baseApi.injectEndpoints({
         return error;
       },
     }),
-    refreshToken: build.mutation<SessionDto, string>({
-      query: (refreshToken) => ({
-        url: `/auth/tokens/${refreshToken}`,
+    refreshToken: build.mutation<SessionDto, RefreshTokenRequestDto>({
+      query: (body) => ({
+        url: '/auth/tokens/refresh',
+        method: 'POST',
+        body,
       }),
       invalidatesTags: [SESSION_TAG],
       transformErrorResponse: (error, meta) => {
@@ -76,14 +78,11 @@ export const sessionApi = baseApi.injectEndpoints({
   }),
 });
 
-export const logout = createAsyncThunk('logout', async (_, { dispatch, getState }) => {
-  const { refreshToken } = (getState() as RootState).session;
-
-  try {
-    await dispatch(sessionApi.endpoints.logout.initiate(refreshToken!)).unwrap();
-  } finally {
-    dispatch(clearSessionData());
-  }
+export const logout = createAppAsyncThunk('session/logout', async (_, { dispatch , getState }) => {
+  dispatch(clearSessionData());
+  await dispatch(
+    sessionApi.endpoints.logout.initiate((getState() as RootState).session.refreshToken)
+  ).unwrap();
 });
 
 export const { useLoginMutation } = sessionApi;

@@ -1,6 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { sessionApi } from '../api/sessionApi';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
+import { sessionApi } from '../api/session-api.ts';
 import { Session } from '@/entities/session';
+import { refreshTokenAction } from '@/shared/api/refresh-token-action.ts';
 
 type SessionSliceState = Partial<Session> & {
   isAuthorized: boolean;
@@ -15,6 +16,7 @@ export const sessionSlice = createSlice({
   initialState,
   reducers: {
     clearSessionData: (state) => {
+      state.refreshToken = undefined;
       state.accessToken = undefined;
       state.userId = undefined;
       state.isAuthorized = false;
@@ -22,7 +24,7 @@ export const sessionSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addMatcher(
-      sessionApi.endpoints.login.matchFulfilled,
+      isAnyOf(sessionApi.endpoints.login.matchFulfilled, refreshTokenAction),
       (state: SessionSliceState, { payload }) => {
         state.isAuthorized = true;
         state.userId = payload.userId;

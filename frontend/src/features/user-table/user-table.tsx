@@ -18,8 +18,9 @@ export function UserTable() {
   if (isFetching) {
     return (
       <Stack gap={6}>
-        {Array.from({ length: 7 }).map(() => (
-          <Skeleton height={6} />
+        {Array.from({ length: 7 }).map((_, idx) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <Skeleton key={idx} height={6} />
         ))}
       </Stack>
     );

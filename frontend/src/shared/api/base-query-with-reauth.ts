@@ -6,7 +6,11 @@ import type {
 } from '@reduxjs/toolkit/query';
 import { Mutex } from 'async-mutex';
 import { baseQuery } from './base-query';
-import { refreshAccessToken } from './refresh-token';
+
+// FSD VIOLATION
+import { type SessionDto } from '@/entities/session';
+import { refreshTokenAction } from './refresh-token-action.ts';
+import { clearSessionAction } from './clear-session-action.ts';
 
 const AUTH_ERROR_CODES = new Set([401]);
 
@@ -32,7 +36,23 @@ export const baseQueryWithReauth: BaseQueryFn<
     if (!mutex.isLocked()) {
       const release = await mutex.acquire();
       try {
-        api.dispatch(refreshAccessToken());
+        const { refreshToken } = (api.getState() as RootState).session;
+        const refreshResult = await baseQuery(
+          {
+            url: '/auth/tokens/refresh',
+            method: 'POST',
+            body: { refreshToken },
+          },
+          api,
+          extraOptions
+        );
+
+        if (refreshResult.data) {
+          api.dispatch(refreshTokenAction(refreshResult.data as SessionDto));
+          result = await baseQuery(args, api, extraOptions);
+        } else {
+          api.dispatch(clearSessionAction());
+        }
       } finally {
         release();
       }
