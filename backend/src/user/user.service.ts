@@ -11,9 +11,8 @@ export class UserService {
   constructor(
     private readonly userFactory: UserFactory,
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>
-  ) {
-  }
+    private readonly userRepository: Repository<User>,
+  ) {}
 
   async create(createUserDto: CreateUserDto) {
     const { login } = createUserDto;
@@ -27,8 +26,14 @@ export class UserService {
     return this.userRepository.save(user);
   }
 
-  async isUserWithLoginAlreadyExists(login: string) {
-    return !!(await this.findUserByLogin(login));
+  async isUserWithLoginAlreadyExists(login: string, id?: number) {
+    const user = await this.findUserByLogin(login);
+
+    if (user && id) {
+      return user.id !== id;
+    }
+
+    return !!user;
   }
 
   findAll() {
@@ -48,14 +53,19 @@ export class UserService {
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
-    const user = this.userFactory.update(updateUserDto);
+    const { login } = updateUserDto;
 
+    if (login && (await this.isUserWithLoginAlreadyExists(login, id))) {
+      throw new ConflictException('User with provided login is already exists');
+    }
+
+    const user = this.userFactory.update(updateUserDto);
     const { affected } = await this.userRepository
       .createQueryBuilder()
       .update(User)
       .set(user)
-      .where("id = :id", { id })
-      .execute()
+      .where('id = :id', { id })
+      .execute();
 
     if (!affected) {
       throw new UnprocessableEntityException('User does not exist');

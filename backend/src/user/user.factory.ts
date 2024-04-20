@@ -7,17 +7,17 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class UserFactory {
   create(dto: CreateUserDto) {
-    const user  = new User();
+    const user = new User();
 
     user.login = dto.login;
-    user.password = this.hashUserPassword(dto.password)
+    user.password = this.hashUserPassword(dto.password);
     user.fullName = dto.fullName;
 
     return user;
   }
 
   update(dto: UpdateUserDto) {
-    const user  = new User();
+    const user = new User();
 
     user.login = dto.login || user.login;
     user.password = dto.password ? this.hashUserPassword(dto.password) : user.password;
