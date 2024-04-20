@@ -7,13 +7,7 @@ export interface ContainerProps extends BoxProps {
 
 export function Container({ children, ...props }: ContainerProps) {
   return (
-    <Box
-      minHeight="100vh"
-      minWidth="100vw"
-      width="100%"
-      height="100%"
-      {...props}
-    >
+    <Box minHeight="100vh" minWidth="100vw" width="100%" height="100%" {...props}>
       {children}
     </Box>
   );

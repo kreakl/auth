@@ -1,22 +1,22 @@
 export type SessionDto = {
   userId: number;
-  accessToken: string
+  accessToken: string;
   refreshToken: string;
   expiresIn: number;
-}
+};
 
-export type LoginRequestBody = {
+export type LoginRequestDto = {
   login: string;
   password: string;
-}
+};
 
-export type UpdateUserBody = Partial<LoginRequestBody> & {
+export type UpdateUserDto = Partial<LoginRequestDto> & {
   fullName?: string;
-}
+};
 
 export type UserDto = {
-  id: number
+  id: number;
   login: string;
   createdAt: string;
   fullName?: string;
-}
+};

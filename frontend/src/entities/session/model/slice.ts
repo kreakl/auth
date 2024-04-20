@@ -1,13 +1,13 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { sessionApi } from '../api/sessionApi'
+import { createSlice } from '@reduxjs/toolkit';
+import { sessionApi } from '../api/sessionApi';
 import { Session } from '@/entities/session';
 
 type SessionSliceState = Partial<Session> & {
   isAuthorized: boolean;
-}
+};
 
 const initialState: SessionSliceState = {
-  isAuthorized: false
+  isAuthorized: false,
 };
 
 export const sessionSlice = createSlice({
@@ -15,31 +15,26 @@ export const sessionSlice = createSlice({
   initialState,
   reducers: {
     clearSessionData: (state) => {
-      state.accessToken = undefined
-      state.userId = undefined
-      state.isAuthorized = false
+      state.accessToken = undefined;
+      state.userId = undefined;
+      state.isAuthorized = false;
     },
   },
   extraReducers: (builder) => {
     builder.addMatcher(
       sessionApi.endpoints.login.matchFulfilled,
       (state: SessionSliceState, { payload }) => {
-        state.isAuthorized = true
-
-        // say TypeScript that isAuthorized = true
-        if (state.isAuthorized) {
-          state.userId = payload.userId
-          state.accessToken = payload.accessToken
-          state.refreshToken = payload.refreshToken;
-        }
+        state.isAuthorized = true;
+        state.userId = payload.userId;
+        state.accessToken = payload.accessToken;
+        state.refreshToken = payload.refreshToken;
       }
-    )
+    );
   },
-})
+});
 
-export const selectIsAuthorized = (state: RootState) =>
-  state.session.isAuthorized
+export const selectIsAuthorized = (state: RootState) => state.session.isAuthorized;
 
-export const selectUserId = (state: RootState) => state.session.userId
+export const selectUserId = (state: RootState) => state.session.userId;
 
-export const { clearSessionData } = sessionSlice.actions
+export const { clearSessionData } = sessionSlice.actions;

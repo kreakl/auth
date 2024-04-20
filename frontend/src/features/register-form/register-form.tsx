@@ -1,10 +1,8 @@
 import { useCallback } from 'react';
-import { Field, Form, SubmitButton } from '@/shared/ui';
 import { Link, useNavigate } from 'react-router-dom';
 import { Box, Heading, Stack } from '@chakra-ui/react';
+import { Field, Form, SubmitButton } from '@/shared/ui';
 import { CreateUserDto, useCreateUserMutation } from '@/entities/user';
-
-type RegisterForm = CreateUserDto;
 
 export function RegisterForm() {
   const [register] = useCreateUserMutation();
@@ -12,17 +10,16 @@ export function RegisterForm() {
 
   const onSubmit = useCallback(
     (data: CreateUserDto) => {
-
       register({
         ...data,
       })
         .unwrap()
         .then(() => {
-          navigate('/login')
+          navigate('/login');
         })
         .catch((error) => error);
     },
-    [navigate]
+    [navigate, register]
   );
 
   const requiredMessage = 'Поле необходимо для заполнения!';
@@ -38,8 +35,8 @@ export function RegisterForm() {
       left="50%"
       top="50%"
       transform="translateY(-50%) translateX(-50%)"
-      px={{base: 5, md: "4rem "}}
-      py={{base: 5, md: "3rem "}}
+      px={{ base: 5, md: '4rem ' }}
+      py={{ base: 5, md: '3rem ' }}
     >
       <Stack alignItems="center" gap={8}>
         <Heading as="h2" fontSize={{ base: 'xl', lg: '2xl' }} fontWeight="600" textAlign="center">
@@ -48,20 +45,20 @@ export function RegisterForm() {
         <Field
           label="Логин"
           placeholder="Введите логин пользователя"
-          rules={{ required: { value: true, message: requiredMessage }}}
+          rules={{ required: { value: true, message: requiredMessage } }}
           name="login"
           type="text"
         />
         <Field
           label="ФИО"
           placeholder="Введите имя пользователя"
-          rules={{ required: { value: true, message: requiredMessage }}}
+          rules={{ required: { value: true, message: requiredMessage } }}
           name="fullName"
           type="text"
         />
         <Field
           label="Пароль"
-          rules={{ required: { value: true, message: requiredMessage }}}
+          rules={{ required: { value: true, message: requiredMessage } }}
           placeholder="Введите пароль пользователя"
           name="password"
           type="password"
@@ -70,9 +67,7 @@ export function RegisterForm() {
           Зарегистрироваться
         </SubmitButton>
         <Box color="blue.400" textDecoration="underline">
-          <Link to={'/login'}>
-            Уже зарегистрированы? Войти в аккаунт
-          </Link>
+          <Link to="/login">Уже зарегистрированы? Войти в аккаунт</Link>
         </Box>
       </Stack>
     </Form>

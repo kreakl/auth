@@ -1,5 +1,5 @@
-import { UserTable } from '@/features/user-table';
 import { Box } from '@chakra-ui/react';
+import { UserTable } from '@/features/user-table';
 
 export function MainPage() {
   return (

@@ -1,6 +1,6 @@
 export type Session = {
-  accessToken: string
+  accessToken: string;
   refreshToken: string;
   expiresIn: number;
   userId: number;
-}
+};

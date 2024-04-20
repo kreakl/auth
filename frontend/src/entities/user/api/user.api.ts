@@ -1,9 +1,11 @@
-import { baseApi, USER_TAG } from '@/shared/api';
-import { CreateUserDto, UpdateUserDto, type UserDto } from './types';
 import {
+  baseApi,
+  USER_TAG,
   isFetchBaseQueryError,
   isFetchBaseQueryErrorWithMessage,
 } from '@/shared/api';
+import { CreateUserDto, UpdateUserDto, type UserDto } from './types';
+
 import { showToast } from '@/shared/lib';
 
 export const userApi = baseApi.injectEndpoints({
@@ -12,13 +14,13 @@ export const userApi = baseApi.injectEndpoints({
       query: (id) => ({
         url: `/user/${id}`,
       }),
-      providesTags: (result) => result ? [{ type: USER_TAG, id: result.id }] : [],
+      providesTags: (result) => (result ? [{ type: USER_TAG, id: result.id }] : []),
     }),
     createUser: builder.mutation<UserDto, CreateUserDto>({
       query: (body) => ({
         url: '/user',
         body,
-        method: 'POST'
+        method: 'POST',
       }),
       transformResponse: (result: UserDto, meta, { login }) => {
         meta?.dispatch(
@@ -26,7 +28,7 @@ export const userApi = baseApi.injectEndpoints({
             title: `Пользователь ${login} был успешно создан!`,
             status: 'success',
           })
-        )
+        );
 
         return result;
       },
@@ -55,9 +57,9 @@ export const userApi = baseApi.injectEndpoints({
       query: ({ id, ...body }) => ({
         url: `/user/${id}`,
         body,
-        method: 'PATCH'
+        method: 'PATCH',
       }),
-      invalidatesTags: (result) => result ? [{ type: USER_TAG, id: result.id }] : [],
+      invalidatesTags: (result) => (result ? [{ type: USER_TAG, id: result.id }] : []),
       transformErrorResponse: (error, meta) => {
         if (isFetchBaseQueryError(error)) {
           let description: string;
@@ -84,14 +86,14 @@ export const userApi = baseApi.injectEndpoints({
             title: `Данные пользователя успешно обновлены!`,
             status: 'success',
           })
-        )
+        );
 
         return result;
       },
     }),
     getUsers: builder.query<UserDto[], void>({
       query: () => ({
-          url: '/user'
+        url: '/user',
       }),
       transformErrorResponse: (error, meta) => {
         if (isFetchBaseQueryError(error)) {
@@ -117,4 +119,9 @@ export const userApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetUsersQuery , useGetUserByIdQuery, useCreateUserMutation, useUpdateUserMutation } = userApi;
+export const {
+  useGetUsersQuery,
+  useGetUserByIdQuery,
+  useCreateUserMutation,
+  useUpdateUserMutation,
+} = userApi;

@@ -1,10 +1,10 @@
 import { ReactNode } from 'react';
 import { forwardRef, Input, InputGroup, InputProps } from '@chakra-ui/react';
-import { createField } from './create-field.tsx'
+import { createField } from './create-field.tsx';
 import { PasswordInput, PasswordInputProps } from './fields/password-input.tsx';
 
 export const PasswordInputField = createField<PasswordInputProps>(
-  forwardRef((props, ref) => <PasswordInput ref={ref} {...props} />),
+  forwardRef((props, ref) => <PasswordInput ref={ref} {...props} />)
 );
 
 export interface InputFieldProps extends InputProps {
@@ -26,5 +26,5 @@ export const InputField = createField<InputFieldProps>(
       );
     }
     return input;
-  }),
+  })
 );

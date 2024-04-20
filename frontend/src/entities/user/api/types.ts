@@ -9,8 +9,8 @@ export type CreateUserDto = {
   login: string;
   password: string;
   fullName: string;
-}
+};
 
 export type UpdateUserDto = Partial<CreateUserDto> & {
   id: number;
-}
+};

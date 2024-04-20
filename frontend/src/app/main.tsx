@@ -6,7 +6,7 @@ import { RouterProvider } from 'react-router-dom';
 
 import { PersistGate } from 'redux-persist/integration/react';
 import { appStore, persistor } from './redux/app-store.ts';
-import { router } from './router.tsx';
+import { router } from './router/router.tsx';
 import { ToastContainer } from '@/features/toast';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

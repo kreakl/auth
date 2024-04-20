@@ -1,4 +1,15 @@
-import { Skeleton, Stack, Table, TableCaption, TableContainer, Tbody, Th, Thead, Tr, Td } from '@chakra-ui/react';
+import {
+  Skeleton,
+  Stack,
+  Table,
+  TableCaption,
+  TableContainer,
+  Tbody,
+  Th,
+  Thead,
+  Tr,
+  Td,
+} from '@chakra-ui/react';
 import { useGetUsersQuery } from '@/entities/user';
 
 export function UserTable() {
@@ -8,15 +19,15 @@ export function UserTable() {
     return (
       <Stack gap={6}>
         {Array.from({ length: 7 }).map(() => (
-            <Skeleton height={6} />
+          <Skeleton height={6} />
         ))}
       </Stack>
-    )
+    );
   }
 
   return (
     <TableContainer>
-      <Table variant='striped' colorScheme='teal'>
+      <Table variant="striped" colorScheme="teal">
         <TableCaption>Список пользователей</TableCaption>
         <Thead>
           <Tr>
@@ -26,11 +37,11 @@ export function UserTable() {
           </Tr>
         </Thead>
         <Tbody>
-          {users.map(({ fullName, login, createdAt }) => (
-            <Tr>
+          {users.map(({ id, fullName, login, createdAt }) => (
+            <Tr key={id}>
               <Td>{fullName}</Td>
               <Td>{login}</Td>
-              <Td>{(new Date(createdAt)).toLocaleTimeString()}</Td>
+              <Td>{new Date(createdAt).toLocaleTimeString()}</Td>
             </Tr>
           ))}
         </Tbody>

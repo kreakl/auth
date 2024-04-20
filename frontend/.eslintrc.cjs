@@ -8,6 +8,7 @@ module.exports = {
     'airbnb',
     'airbnb-typescript',
     'airbnb/hooks',
+    "plugin:react/jsx-runtime",
     "@feature-sliced/eslint-config/rules/layers-slices",
     "plugin:prettier/recommended"
   ],
@@ -25,7 +26,7 @@ module.exports = {
     'import/no-extraneous-dependencies': 'off',
     "react/require-default-props": "off",
     'react/jsx-props-no-spreading': 'off',
-    "react/react-in-jsx-scope": "off",
+    'no-param-reassign': 'off',
     'no-nested-ternary': "off",
     'import/extensions': 'off',
     'react-refresh/only-export-components': [

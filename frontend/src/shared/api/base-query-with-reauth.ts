@@ -1,4 +1,9 @@
-import type { FetchArgs, FetchBaseQueryError, FetchBaseQueryMeta, BaseQueryFn } from '@reduxjs/toolkit/query';
+import type {
+  FetchArgs,
+  FetchBaseQueryError,
+  FetchBaseQueryMeta,
+  BaseQueryFn,
+} from '@reduxjs/toolkit/query';
 import { Mutex } from 'async-mutex';
 import { baseQuery } from './base-query';
 import { refreshAccessToken } from './refresh-token';

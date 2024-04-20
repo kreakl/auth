@@ -1,11 +1,11 @@
 import { useCallback } from 'react';
-import { Field, Form, SubmitButton } from '@/shared/ui';
 import { Link, useNavigate } from 'react-router-dom';
 import { Box, Heading, Stack } from '@chakra-ui/react';
+import { Field, Form, SubmitButton } from '@/shared/ui';
 import { useLoginMutation } from '@/entities/session';
-import { LoginRequestBody } from '@/entities/session/api/types.ts';
+import { LoginRequestDto } from '@/entities/session/api/types.ts';
 
-type LoginFormData = LoginRequestBody;
+type LoginFormData = LoginRequestDto;
 
 export function LoginForm() {
   const [login] = useLoginMutation();
@@ -13,13 +13,12 @@ export function LoginForm() {
 
   const onSubmit = useCallback(
     (data: LoginFormData) => {
-
       login({
         ...data,
       })
         .unwrap()
         .then(() => {
-          navigate('/')
+          navigate('/');
         })
         .catch((error) => error);
     },
@@ -38,8 +37,8 @@ export function LoginForm() {
       left="50%"
       top="50%"
       transform="translateY(-50%) translateX(-50%)"
-      px={{base: 5, md: "4rem "}}
-      py={{base: 5, md: "3rem "}}
+      px={{ base: 5, md: '4rem ' }}
+      py={{ base: 5, md: '3rem ' }}
     >
       <Stack alignItems="center" gap={8}>
         <Heading as="h2" fontSize={{ base: 'xl', lg: '2xl' }} fontWeight="600" textAlign="center">
@@ -48,13 +47,13 @@ export function LoginForm() {
         <Field
           label="Логин"
           placeholder="Введите логин пользователя"
-          rules={{ required: { value: true, message: requiredMessage }}}
+          rules={{ required: { value: true, message: requiredMessage } }}
           name="login"
           type="text"
         />
         <Field
           label="Пароль"
-          rules={{ required: { value: true, message: requiredMessage }}}
+          rules={{ required: { value: true, message: requiredMessage } }}
           placeholder="Введите пароль пользователя"
           name="password"
           type="password"
@@ -63,9 +62,7 @@ export function LoginForm() {
           Войти
         </SubmitButton>
         <Box color="blue.400" textDecoration="underline">
-          <Link to={'/register'}>
-            Нет аккаунта? Зарегистрироваться
-          </Link>
+          <Link to="/register">Нет аккаунта? Зарегистрироваться</Link>
         </Box>
       </Stack>
     </Form>

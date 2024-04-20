@@ -25,7 +25,8 @@
   },
   "include": [
     "src",
-    "types/app.d.ts"
+    "types/app.d.ts",
+    "vite.config.ts"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

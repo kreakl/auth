@@ -1,6 +1,13 @@
 import { ReactElement, useState } from 'react';
-import { forwardRef, IconButton, Input, InputGroup, InputProps, InputRightElement } from '@chakra-ui/react';
-import { IoMdEye as HidePasswordIcon, IoMdEyeOff as ShowPasswordIcon } from "react-icons/io";
+import {
+  forwardRef,
+  IconButton,
+  Input,
+  InputGroup,
+  InputProps,
+  InputRightElement,
+} from '@chakra-ui/react';
+import { IoMdEye as HidePasswordIcon, IoMdEyeOff as ShowPasswordIcon } from 'react-icons/io';
 
 export interface PasswordInputProps extends InputProps {
   showIcon?: ReactElement;
@@ -21,7 +28,7 @@ export const PasswordInput = forwardRef<PasswordInputProps, 'div'>(
       autoComplete = 'on',
       ...inputProps
     },
-    ref,
+    ref
   ) => {
     const [show, setShow] = useState<boolean>(false);
     const handleClick = () => {
@@ -55,5 +62,5 @@ export const PasswordInput = forwardRef<PasswordInputProps, 'div'>(
         </InputRightElement>
       </InputGroup>
     );
-  },
+  }
 );

@@ -1,12 +1,12 @@
-import { Avatar,  Flex, Stack, Link as ChakraLink } from '@chakra-ui/react';
+import { Avatar, Flex, Stack, Link as ChakraLink } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 import { useGetUserByIdQuery } from '@/entities/user';
 import { logout, selectUserId } from '@/entities/session';
 import { useAppDispatch, useAppSelector } from '@/shared/model';
-import { Link } from 'react-router-dom';
 
 export function Header() {
   const userId = useAppSelector(selectUserId);
-  const { data: user} = useGetUserByIdQuery(userId!);
+  const { data: user } = useGetUserByIdQuery(userId!);
   const dispatch = useAppDispatch();
   const { fullName = '' } = user || {};
 
@@ -24,13 +24,11 @@ export function Header() {
     >
       <Stack gap={4} alignItems="center">
         <Avatar name={fullName} />
-        <ChakraLink color="blue.600">
-          <Link to={`/profile/${userId}`}>
-            Профиль пользователя
-          </Link>
+        <ChakraLink as="div" color="blue.600">
+          <Link to={`/profile/${userId}`}>Профиль пользователя</Link>
         </ChakraLink>
-        <ChakraLink color="blue.600">
-          <Link to={'/login'} onClick={() => dispatch(logout())}>
+        <ChakraLink as="div" color="blue.600">
+          <Link to="/login" onClick={() => dispatch(logout())}>
             Выйти из аккаунта
           </Link>
         </ChakraLink>

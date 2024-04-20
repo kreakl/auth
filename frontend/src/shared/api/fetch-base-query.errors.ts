@@ -12,12 +12,3 @@ export function isFetchBaseQueryErrorWithMessage(data: unknown): data is { messa
     typeof (data as any).message === 'string'
   );
 }
-
-export function isErrorWithMessage(error: unknown): error is FetchBaseQueryError {
-  return (
-    typeof error === 'object' &&
-    error != null &&
-    'message' in error &&
-    typeof (error as any).message === 'string'
-  );
-}
