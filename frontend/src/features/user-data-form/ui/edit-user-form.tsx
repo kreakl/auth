@@ -5,6 +5,7 @@ import { Field, Form, FormProps, SubmitButton } from '@/shared/ui';
 import { useGetUserByIdQuery, useUpdateUserMutation } from '@/entities/user';
 import { useAppSelector } from '@/shared/model';
 import { selectUserId, UpdateUserDto } from '@/entities/session';
+import { userFormRules } from '@/features/user-data-form/lib';
 
 type EditUserFormData = UpdateUserDto;
 
@@ -23,6 +24,7 @@ export function EditUserForm(props: EditUserFormProps) {
       editUser({
         id: userId,
         ...data,
+        password: data.password ? data.password : undefined,
       })
         .unwrap()
         .then(() => {
@@ -32,8 +34,6 @@ export function EditUserForm(props: EditUserFormProps) {
     },
     [editUser, userId, navigate]
   );
-
-  const requiredMessage = 'Поле необходимо для заполнения!';
 
   return (
     <Form
@@ -54,21 +54,20 @@ export function EditUserForm(props: EditUserFormProps) {
           defaultValue={login}
           label="Логин"
           placeholder="Введите логин пользователя"
-          rules={{ required: { value: true, message: requiredMessage } }}
+          rules={userFormRules.login}
           name="login"
           type="text"
         />
         <Field
           defaultValue={fullName}
           label="ФИО"
-          placeholder="Введите имя пользователя"
-          rules={{ required: { value: true, message: requiredMessage } }}
+          rules={userFormRules.fullName}
           name="fullName"
           type="text"
         />
         <Field
           label="Пароль"
-          rules={{ required: { value: true, message: requiredMessage } }}
+          rules={{ ...userFormRules.password, required: false }}
           placeholder="Введите пароль пользователя"
           name="password"
           type="password"

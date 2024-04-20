@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Box, Heading, Stack } from '@chakra-ui/react';
 import { Field, Form, SubmitButton } from '@/shared/ui';
 import { CreateUserDto, useCreateUserMutation } from '@/entities/user';
+import { userFormRules } from '@/features/user-data-form/lib';
 
 export function RegisterForm() {
   const [register] = useCreateUserMutation();
@@ -21,8 +22,6 @@ export function RegisterForm() {
     },
     [navigate, register]
   );
-
-  const requiredMessage = 'Поле необходимо для заполнения!';
 
   return (
     <Form
@@ -45,21 +44,21 @@ export function RegisterForm() {
         <Field
           label="Логин"
           placeholder="Введите логин пользователя"
-          rules={{ required: { value: true, message: requiredMessage } }}
+          rules={userFormRules.login}
           name="login"
           type="text"
         />
         <Field
           label="ФИО"
           placeholder="Введите имя пользователя"
-          rules={{ required: { value: true, message: requiredMessage } }}
+          rules={userFormRules.fullName}
           name="fullName"
           type="text"
         />
         <Field
           label="Пароль"
-          rules={{ required: { value: true, message: requiredMessage } }}
-          placeholder="Введите пароль пользователя"
+          rules={userFormRules.password}
+          placeholder="введите пароль пользователя"
           name="password"
           type="password"
         />

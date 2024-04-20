@@ -2,8 +2,7 @@ import { createHashRouter } from 'react-router-dom';
 import { BaseLayout, LayoutWithHeader } from './layouts';
 import { LoginPage } from '@/pages/login-page';
 import { MainPage } from '@/pages/main-page';
-import { LoginForm } from '@/features/login-form';
-import { RegisterForm } from '@/features/register-form';
+import { LoginForm, RegisterForm } from '@/features/user-data-form';
 import { ProfilePage } from '@/pages/profile-page';
 import { AuthGuard, GuestGuard } from './guards';
 

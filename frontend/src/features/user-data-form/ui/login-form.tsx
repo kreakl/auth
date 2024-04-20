@@ -4,6 +4,7 @@ import { Box, Heading, Stack } from '@chakra-ui/react';
 import { Field, Form, SubmitButton } from '@/shared/ui';
 import { useLoginMutation } from '@/entities/session';
 import { LoginRequestDto } from '@/entities/session/api/types.ts';
+import { userFormRules } from '@/features/user-data-form/lib';
 
 type LoginFormData = LoginRequestDto;
 
@@ -24,7 +25,6 @@ export function LoginForm() {
     },
     [login, navigate]
   );
-  const requiredMessage = 'Поле необходимо для заполнения!';
 
   return (
     <Form
@@ -47,13 +47,13 @@ export function LoginForm() {
         <Field
           label="Логин"
           placeholder="Введите логин пользователя"
-          rules={{ required: { value: true, message: requiredMessage } }}
+          rules={{ required: userFormRules.login.required }}
           name="login"
           type="text"
         />
         <Field
           label="Пароль"
-          rules={{ required: { value: true, message: requiredMessage } }}
+          rules={{ required: userFormRules.password.required }}
           placeholder="Введите пароль пользователя"
           name="password"
           type="password"

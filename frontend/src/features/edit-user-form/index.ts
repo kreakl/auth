@@ -1,1 +1,1 @@
-export * from './edit-user-form.tsx';
+export * from '../user-data-form/ui/edit-user-form.tsx';
