@@ -8,13 +8,16 @@ import { options } from '@/auth/config/jwt-module.config';
 import { UserModule } from '@/user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Token } from '@/auth/entities/token.entity';
+import { AuthFactory } from '@/auth/auth.factory';
 
 @Module({
-  providers: [
-    AuthService,
-    JwtStrategy,
-  ],
+  providers: [AuthService, JwtStrategy, AuthFactory],
   controllers: [AuthController],
-  imports: [ TypeOrmModule.forFeature([Token]), PassportModule, JwtModule.registerAsync(options()), UserModule],
+  imports: [
+    TypeOrmModule.forFeature([Token]),
+    PassportModule,
+    JwtModule.registerAsync(options()),
+    UserModule,
+  ],
 })
 export class AuthModule {}
