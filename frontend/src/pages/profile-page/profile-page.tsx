@@ -1,5 +1,5 @@
 import { Container } from '@/shared/ui';
-import { EditUserForm } from '@/features/edit-user-form';
+import { EditUserForm } from '@/features/user-data-form';
 
 export function ProfilePage() {
   return (

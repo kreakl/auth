@@ -10,6 +10,11 @@ import { showToast } from '@/shared/lib';
 
 export const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    getCurrentUser: builder.query<UserDto, void>({
+      query: () => ({
+        url: '/user/me',
+      }),
+    }),
     getUserById: builder.query<UserDto, number>({
       query: (id) => ({
         url: `/user/${id}`,
@@ -124,4 +129,5 @@ export const {
   useGetUserByIdQuery,
   useCreateUserMutation,
   useUpdateUserMutation,
+  useGetCurrentUserQuery,
 } = userApi;

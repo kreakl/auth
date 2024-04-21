@@ -1,4 +1,4 @@
-import { createHashRouter } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 import { BaseLayout, LayoutWithHeader } from './layouts';
 import { LoginPage } from '@/pages/login-page';
 import { MainPage } from '@/pages/main-page';
@@ -6,7 +6,7 @@ import { LoginForm, RegisterForm } from '@/features/user-data-form';
 import { ProfilePage } from '@/pages/profile-page';
 import { AuthGuard, GuestGuard } from './guards';
 
-export const router = createHashRouter([
+export const router = createBrowserRouter([
   {
     element: (
       <AuthGuard>
@@ -15,7 +15,7 @@ export const router = createHashRouter([
     ),
     children: [
       {
-        path: '/login',
+        path: 'login',
         element: (
           <LoginPage>
             <LoginForm />
@@ -23,7 +23,7 @@ export const router = createHashRouter([
         ),
       },
       {
-        path: '/register',
+        path: 'register',
         element: (
           <LoginPage>
             <RegisterForm />
@@ -45,7 +45,7 @@ export const router = createHashRouter([
         element: <MainPage />,
       },
       {
-        path: '/profile/:id',
+        path: 'profile',
         element: <ProfilePage />,
       },
     ],

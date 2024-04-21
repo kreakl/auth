@@ -78,7 +78,7 @@ export const sessionApi = baseApi.injectEndpoints({
   }),
 });
 
-export const logout = createAppAsyncThunk('session/logout', async (_, { dispatch , getState }) => {
+export const logout = createAppAsyncThunk('session/logout', async (_, { dispatch, getState }) => {
   dispatch(clearSessionData());
   await dispatch(
     sessionApi.endpoints.logout.initiate((getState() as RootState).session.refreshToken)

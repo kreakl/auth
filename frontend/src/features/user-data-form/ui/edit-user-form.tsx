@@ -2,9 +2,8 @@ import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, ButtonGroup, Heading, Stack } from '@chakra-ui/react';
 import { Field, Form, FormProps, SubmitButton } from '@/shared/ui';
-import { useGetUserByIdQuery, useUpdateUserMutation } from '@/entities/user';
-import { useAppSelector } from '@/shared/model';
-import { selectUserId, UpdateUserDto } from '@/entities/session';
+import { useGetCurrentUserQuery, useUpdateUserMutation } from '@/entities/user';
+import { UpdateUserDto } from '@/entities/session';
 import { userFormRules } from '@/features/user-data-form/lib';
 
 type EditUserFormData = UpdateUserDto;
@@ -12,17 +11,16 @@ type EditUserFormData = UpdateUserDto;
 type EditUserFormProps = Omit<FormProps, 'onSubmit'>;
 
 export function EditUserForm(props: EditUserFormProps) {
-  const userId = useAppSelector(selectUserId) as number;
   const [editUser] = useUpdateUserMutation();
-  const { data: user } = useGetUserByIdQuery(userId);
-  const { login, fullName } = user || {};
+  const { data: user } = useGetCurrentUserQuery();
+  const { login, fullName, id = 0 } = user || {};
 
   const navigate = useNavigate();
 
   const onSubmit = useCallback(
     (data: EditUserFormData) => {
       editUser({
-        id: userId,
+        id,
         ...data,
         password: data.password ? data.password : undefined,
       })
@@ -32,7 +30,7 @@ export function EditUserForm(props: EditUserFormProps) {
         })
         .catch((error) => error);
     },
-    [editUser, userId, navigate]
+    [editUser, navigate, id]
   );
 
   return (
