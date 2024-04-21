@@ -18,19 +18,22 @@ import { JwtAuthGuard } from '@/shared/guards/jwt-auth.guard';
       isGlobal: true,
     }),
     TypeOrmModule.forRootAsync({
-      useFactory: (config: ConfigService<AppConfig>) => ({
-        type: 'postgres',
-        host: config.get('DB_HOST'),
-        port: config.get('DB_PORT'),
-        username: config.get('DB_USERNAME'),
-        password: config.get('DB_PASSWORD'),
-        database: config.get('DB_NAME'),
-        namingStrategy: new SnakeNamingStrategy(),
-        autoLoadEntities: true,
-        synchronize: true,
-        logger: 'file',
-        logging: true,
-      }),
+      useFactory: (config: ConfigService<AppConfig>) => {
+        console.log(config.get('DB_PORT'));
+        return {
+          type: 'postgres',
+          host: config.get('DB_HOST'),
+          port: config.get('DB_PORT'),
+          username: config.get('DB_USERNAME'),
+          password: config.get('DB_PASSWORD'),
+          database: config.get('DB_NAME'),
+          namingStrategy: new SnakeNamingStrategy(),
+          autoLoadEntities: true,
+          synchronize: true,
+          logger: 'file',
+          logging: true,
+        };
+      },
       inject: [ConfigService],
       imports: [ConfigModule],
     }),

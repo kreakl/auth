@@ -7,6 +7,7 @@ import {
   Param,
   UseInterceptors,
   ClassSerializerInterceptor,
+  NotFoundException,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -31,18 +32,23 @@ export class UserController {
     return this.userService.findAll();
   }
 
+  @Get('me')
+  me(@CurrentUser() user: User) {
+    return user;
+  }
+
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    const user = await this.userService.findOne(+id);
+    if (user) {
+      return user;
+    }
+
+    throw new NotFoundException('User not found');
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(+id, updateUserDto);
-  }
-
-  @Get('/me')
-  me(@CurrentUser() user: User) {
-    return user;
   }
 }

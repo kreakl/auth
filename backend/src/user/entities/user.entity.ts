@@ -16,6 +16,6 @@ export class User {
   @Column('varchar', { length: 255, nullable: true })
   fullName?: string;
 
-  @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)' })
+  @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP(6)' })
   createdAt: Date;
 }
